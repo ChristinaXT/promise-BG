@@ -118,24 +118,24 @@ parcelRequire = (function (modules, cache, entry, globalName) {
 
   return newRequire;
 })({"app.js":[function(require,module,exports) {
-const express = require('express');
+const changeThings = (color, delay) => {
+  return new Promise((resolve, reject) => {
+    const interval = setInterval(() => {
+      // console.log('The Interval');
+      document.querySelector('.container').innerHTML = `<p>Hello</p>`; // alert('Hello')
 
-const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <title>A JavaScript project</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-</head>
-<body>
-  <h1>A JavaScript project</h1>
-</body>
-</html>`;
-const app = express();
-app.get('/', (req, res) => {
-  res.set('Content-Type', 'text/html');
-  res.status(200).send(html);
-});
-module.exports = app;
+      document.body.style.background = color;
+      resolve();
+    }, delay);
+    const btn = document.querySelector('button');
+    btn.addEventListener('click', () => {
+      setTimeout(() => {
+        clearInterval(interval);
+        console.log('Interval Over');
+      }, 200);
+    });
+  });
+};
 },{}],"index.js":[function(require,module,exports) {
 const app = require('./app');
 
