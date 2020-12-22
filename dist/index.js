@@ -127,7 +127,7 @@ const html = `<!DOCTYPE html>
 <body>
   <h1>A JavaScript project</h1>
 
-  <button>Click Here</button>
+  <button>Stop Color Change</button>
   <div class="container">
 
   </div>
