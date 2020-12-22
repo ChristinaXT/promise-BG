@@ -117,9 +117,7 @@ parcelRequire = (function (modules, cache, entry, globalName) {
   }
 
   return newRequire;
-})({"app.js":[function(require,module,exports) {
-const express = require('express');
-
+})({"components/main.js":[function(require,module,exports) {
 const html = `<!DOCTYPE html>
 <html lang="en">
 <head>
@@ -128,15 +126,85 @@ const html = `<!DOCTYPE html>
 </head>
 <body>
   <h1>A JavaScript project</h1>
+
+  <button>Click Here</button>
+  <div class="container">
+
+  </div>
+
+  <script>
+  const changeThings = (color, delay) => {
+    return new Promise((resolve, reject) => {
+      const interval = setInterval(() => {
+        // console.log('The Interval');
+
+        // document.querySelector('.container').innerHTML = '<p>Hello</p>'
+        document.querySelector('.container').innerHTML = '<a href="/things" target="_blank">Things Database</a>'
+
+        // alert('Hello')
+        document.body.style.background = color
+        resolve();
+      }, delay);
+
+      const btn = document.querySelector('button');
+      btn.addEventListener('click', () => {
+        setTimeout(() => {
+          clearInterval(interval)
+          console.log('Interval Over');
+        }, 200)
+      })
+    })
+    }
+
+    const myShow = async () => {
+    await changeThings('skyblue', 500);
+    await changeThings('indigo', 1000);
+    await changeThings('orange', 1000);
+    }
+
+    myShow();
+  </script>
+
 </body>
 </html>`;
+module.exports = html;
+},{}],"models/things.js":[function(require,module,exports) {
+const things = [{
+  item: 'Television',
+  color: 'Silver',
+  isNew: true,
+  id: 1
+}, {
+  item: 'Phone',
+  color: 'Black',
+  isNew: false,
+  id: 2
+}, {
+  item: 'Printer',
+  color: 'Blue',
+  isNew: true,
+  id: 3
+}];
+module.exports = things;
+},{}],"app.js":[function(require,module,exports) {
+const express = require('express');
+
 const app = express();
+
+const html = require('./components/main');
+
+const things = require('./models/things');
+
 app.get('/', (req, res) => {
-  res.set('Content-Type', 'text/html');
+  // res.set('Content-Type', 'text/html');
+  // res.status(200).send(html);
   res.status(200).send(html);
 });
+app.get('/things', (req, res) => {
+  res.send(things);
+});
 module.exports = app;
-},{}],"index.js":[function(require,module,exports) {
+},{"./components/main":"components/main.js","./models/things":"models/things.js"}],"index.js":[function(require,module,exports) {
 const app = require('./app');
 
 const port = '8888';
