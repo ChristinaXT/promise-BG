@@ -136,6 +136,14 @@ const changeThings = (color, delay) => {
     });
   });
 };
+
+const myShow = async () => {
+  await changeThings('skyblue', 500);
+  await changeThings('indigo', 1000);
+  await changeThings('orange', 1000);
+};
+
+myShow();
 },{}],"index.js":[function(require,module,exports) {
 const app = require('./app');
 
